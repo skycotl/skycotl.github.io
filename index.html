@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <body>
+<div>
+  <h3>Next Event:</h3>
+  <p id="next-event"></p>
+</div>
+
+<script>
+  // Define the event timestamps and names
+  const eventTimestamps = [
+    { time: "09:50", name: "Sanctuary Turtle Wax" },
+    { time: "11:05", name: "Sanctuary Islands Geyser Wax" },
+    { time: "13:35", name: "Forest Grandma Dinner Wax" },
+    // add more events here
+  ];
+
+  // Find the next event timestamp
+  const now = new Date();
+  let nextEventTimestamp = null;
+  let nextEventName = null;
+
+  for (let i = 0; i < eventTimestamps.length; i++) {
+    const timestamp = new Date();
+    const [hours, minutes] = eventTimestamps[i].time.split(":");
+    timestamp.setHours(hours, minutes, 0, 0);
+
+    if (timestamp > now) {
+      nextEventTimestamp = timestamp;
+      nextEventName = eventTimestamps[i].name;
+      break;
+    }
+  }
+
+  // Calculate the time remaining until the next event
+  const timeRemaining = nextEventTimestamp - now;
+  const hoursRemaining = Math.floor(timeRemaining / (1000 * 60 * 60));
+  const minutesRemaining = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+
+  // Display the next event and the time remaining
+  document.getElementById("next-event").textContent = `${nextEventName} at ${nextEventTimestamp.toLocaleTimeString()} (in ${hoursRemaining} hours and ${minutesRemaining} minutes)`;
+</script>
+ </body>
+</html>
